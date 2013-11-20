@@ -236,6 +236,7 @@ var QuranView = Backbone.View.extend({
 						_.each(data.split('\n'), function(item) {
 							if (item) {
 								item = $.parseJSON(item);
+								item['text'] = persianParser(item['text']).parse().toString();
 								aya = new Aya(item);
 								if (store) aya.save();
 								quran.collection.add(aya);
@@ -390,7 +391,7 @@ var TafsirView = Backbone.View.extend({
 					context: {id: bayan.get('id')},
 					url: server +'almizan_'+ bayan.get('id'),
 					success: function(item){
-						bayan = new Bayan({id: this.id, content: item});
+						bayan = new Bayan({id: this.id, content: persianParser(item).parse().toString()});
 						if (store) bayan.save();
 						loadBayan(bayan, prepare);
 					},
