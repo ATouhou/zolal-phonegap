@@ -1,0 +1,552 @@
+@font-face {
+	font-family: QuranFont;
+	font-weight: normal;
+	src: url('../font/QuranFont.otf') format('opentype');
+}
+@font-face {
+	font-family: AppFont;
+	font-weight: normal;
+	src: url('../font/AppFont.ttf') format('truetype');
+}
+@font-face {
+	font-family: AppFont;
+	font-weight: bold;
+	src: url('../font/AppFontBd.ttf') format('truetype');
+}
+
+body {
+	height: 100%;
+	padding: 0;
+	overflow: hidden;
+	font-family: AppFont;
+}
+#wrap, #footer {
+	direction: rtl;
+}
+#wrap {
+	height: 100%;
+	max-height: 650px;
+	position: relative;
+	padding: 0 25px;
+}
+body, blockquote p {
+	font-size: 18px;
+}
+.btn {
+	font-size: 17px;
+	min-width: 25px;
+}
+
+@footer: 40px;
+#footer {
+	height: @footer;
+	padding: 0 10px;
+}
+
+.container {
+	max-width: 800px;
+}
+
+#quran, #tafsir {
+	text-align: justify;
+	overflow: auto;
+	margin: 10px auto;
+}
+
+#quran {
+	max-width: 600px;
+	overflow: hidden;
+	direction: ltr;
+
+	#pages {
+		width: 100000px;
+
+		.page {
+			height: inherit;
+			padding: 0 10px;
+			float: left;
+			direction: rtl;
+			overflow-y: auto;
+		}
+	}
+}
+
+#quran .page {
+	font-family: QuranFont;
+	font-size: 24px;
+	line-height: 42px;
+	text-shadow: 0.5px 0.5px 1px #eee;
+	cursor: pointer;
+	visibility: hidden;
+	&.front {
+		visibility: visible;
+	}
+
+	div.bism {
+		text-align: center;
+		font-size: .9em;
+	}
+	div.sura {
+		margin: 8px 0 4px;
+		text-align: center;
+		background: #eee;
+
+		span {
+			text-shadow: 1px 1px 2px #999;
+			line-height: 20px;
+		}
+	}
+
+	span.aya {
+		&.active {
+			.text {
+				text-shadow: 0px 2px 3px #ccc;
+				// text-shadow: 0px 0px 20px #999;
+			}
+
+			.phrase {
+				color: #2A6496;
+
+				&:hover, &.active {
+					color: #428BCA;
+				}
+			}
+		}
+	}
+
+	span.mark {
+		color: #3A87AD;
+		font-family: Arial;
+		margin-right: 6px;
+	}
+	span.number {
+		font-family: AppFont;
+		font-weight: bold;
+		font-size: .6em;
+		color: #555;
+		background: #efefef;
+		padding: 3px 5px 0px 4px;
+		border-radius: 50px;
+		min-width: 14px;
+		text-align: center;
+		display: inline-block;
+		line-height: 18px;
+		margin: 0 1px 0 3px;
+	}
+}
+
+#tafsir {
+	text-align: justify;
+	overflow: auto;
+	font-size: 20px;
+	line-height: 25px;
+	padding: 0 5px;
+
+	h1 {
+		font-size: 1.1em;
+	}
+	h2, h3, h1 {
+		font-size: 1em;
+	}
+	h1, h2, h3 {
+		margin: 12px 0 6px;
+		line-height: 30px;
+		text-shadow: 0 1px 2px #CCC;
+	}
+	blockquote {
+		padding: 0 15px;
+		margin: 0 20px;
+		border-right: 5px solid #EEE;
+		border-left: none;
+		font-size: 1em;
+
+		p {
+			margin-bottom: 1px;
+		}
+	}
+	p {
+		margin-bottom: 8px;
+
+		&.ayas {
+			margin-top: 10px;
+		}
+	}
+	code {
+		display: none;
+	}
+}
+em {
+	font-style: normal;
+	font-weight: bold;
+	font-size: .85em;
+}
+h3 em {
+	font-weight: inherit;
+	font-size: inherit;
+}
+
+#message {
+	position: absolute;
+	bottom: @footer;
+	left: 20px;
+	width: -webkit-calc(~"100% - 40px");
+	width: calc(~"100% - 40px");
+	display: none;
+	z-index: 10;
+
+	&.top {
+		bottom: initial;
+		top: 20px;
+	}
+
+	.container {
+		max-width: 600px;
+	}
+
+	.close {
+		font-family: Arial;
+		margin-top: -8px;
+		margin-right: -8px;
+		background: #D9CEB2;
+		border-radius: 15px;
+		width: 20px;
+	}
+
+	#content {
+		padding: 8px 15px;
+		margin-bottom: 20px;
+		text-align: justify;
+		box-shadow: 0 0 10px hsl(50, 50%, 80%);
+		max-height: 142px;
+
+		span.aya {
+			color: royalblue;
+			text-shadow: 0 1px 2px #ccc;
+		}
+		.continue {
+			margin-right: 5px;
+		}
+		h3 {
+			font-size: 15px;
+			line-height: initial;
+			margin: 0;
+			margin-bottom: 2px;
+			max-height: 24px;
+		}
+		p {
+			margin-bottom: 0;
+		}
+		.header {
+			margin-bottom: 2px;
+			line-height: inherit;
+		}
+		code, .footnote {
+			display: none;
+		}
+	}
+
+	.alert-note {
+		background-color: #FFFDC1;
+		border-color: #FFFC99;
+		color: darken(#7A6A53, 5%);
+		box-shadow: 0 0 10px #FFFC99;
+	}
+	a.link:hover .alert-note {
+		background-color: darken(#FFFDC1, 5%);
+	}
+	a {
+		text-decoration: none;
+	}
+}
+
+#footer {
+	#address {
+		display: none;
+	}
+	&.container {
+		max-width: 600px;
+	}
+
+	#current {
+		color: #777;
+		padding: 8px 0;
+
+		.quran-address {
+			#sura {
+				width: 60px;
+			}
+			#aya {
+				width: 30px;
+			}
+			#page {
+				width: 30px;
+			}
+		}
+
+		.quran-address {
+			margin-top: -4px;
+
+			input {
+				margin-top: 2px;
+			}
+		}
+	}
+
+	.nav {
+		float: left;
+		margin-bottom: 0;
+	}
+	.control {
+		background: #eee;
+		box-shadow: 0px 0px 5px #eee;
+		margin-right: 5px;
+		min-width: 28px;
+
+		color: #555;
+		&:hover, &:active {
+			color: #222;
+			background: #e0e0e0;
+		}
+	}
+	a.control {
+		text-align: center;
+	}
+	.bold {
+		font-weight: bold;
+		font-size: .85em;
+		color: #666;
+	}
+}
+input, select {
+	border: none;
+	font-family: AppFont, "B Mitra", Arial;
+	text-align: right;
+	background: none;
+
+	&:focus {
+		outline: none;
+	}
+}
+select {
+	font-size: 18px;
+	border: none;
+	background: #eee;
+	text-align: right;
+	padding: 0px 6px 2px;
+	margin-bottom: 0;
+
+	&:hover, &:active {
+		color: #222;
+		background: #e0e0e0;
+	}
+}
+
+// typeahead
+.twitter-typeahead {
+	display: inline !important;
+
+	.tt-query {
+		vertical-align: middle !important;
+	}
+	.tt-dropdown-menu {
+		top: initial !important;
+		bottom: 100% !important;
+	}
+	.tt-hint {
+		display: none;
+	}
+
+	.tt-dropdown-menu {
+		padding: 8px 0;
+		background-color: #fff;
+		border: 1px solid rgba(0, 0, 0, 0.2);
+		border-radius: 8px;
+		box-shadow: 0 5px 10px rgba(0,0,0,.2);
+	}
+	.tt-suggestion {
+		padding: 3px 20px;
+		font-size: 18px;
+		line-height: 24px;
+	}
+	.tt-suggestion.tt-is-under-cursor {
+		color: #fff;
+		background-color: #0097cf;
+	}
+	.tt-suggestion p {
+		margin: 0;
+	}
+}
+
+.loading {
+	background: url(loading.gif) no-repeat center center;
+}
+#tafsir .loading {
+	height: 100px;
+}
+
+
+span.footnote {
+	font-size: .55em;
+	display: inline-block;
+	text-align: center;
+	cursor: pointer;
+	vertical-align: middle;
+	line-height: 7px;
+	padding: 5px;
+	margin: -5px;
+	margin-bottom: 4px;
+	border-radius: 10px;
+	font-weight: bold;
+	color: #555;
+	text-shadow: 1px 0 1px #ccc;
+	cursor: pointer;
+
+	&:hover {
+		color: #049cdb;
+	}
+}
+
+#tafsir {
+	text-shadow: 0 1px 0 #efefef;
+	margin-right: -40px;
+	padding-right: 40px;
+
+	span.aya {
+		color: royalblue;
+		text-shadow: 0 1px 2px #ccc;
+	}
+	li {
+		list-style: none;
+		line-height: 24px;
+	}
+	code.page {
+		display: initial;
+		float: right;
+		font-family: AppFont;
+		font-size: 18px;
+		line-height: 24px;
+		border-radius: 0;
+		color: #555;
+		padding: 0;
+		width: 105%;
+		margin-right: -40px;
+		margin-left: -100%;
+		border: none;
+		background: none;
+
+		span {
+			background: #eee;
+			border-top: 2px solid #aaa;
+			line-height: 20px;
+
+			text-shadow: none;
+			width: 30px;
+			display: inline-block;
+			text-align: center;
+		}
+	}
+}
+
+#menu {
+	position: absolute;
+	direction: rtl;
+	margin: 0;
+	width: 124px;
+	left: -100px;
+	height: 100px;
+	top: -webkit-calc(~"50% - 50px");
+	top: calc(~"50% - 50px");
+
+	li {
+		display: block;
+		margin: 7px 0;
+
+		a {
+			padding: 0 24px 0 18px;
+			color: #ccc;
+			text-decoration: none;
+			position: relative;
+
+			&:hover {
+				background: whitesmoke;
+				color: #555;
+			}
+		}
+	}
+	i {
+		display: inline-block;
+		text-align: center;
+		width: 24px;
+		position: absolute;
+		right: 0px;
+		top: 4px;
+	}
+}
+
+.modal {
+	p.option {
+		margin-top: 18px;
+	}
+	#copyright {
+		font-size: .9em;
+	}
+	p:last-child {
+		margin: 0;
+	}
+}
+.tooltip-inner {
+	font-size: 15px;
+}
+
+// phone
+
+@media (max-width: 480px) {
+	#wrap {
+		padding: 0;
+	}
+	#menu {
+		display: none;
+	}
+	#message {
+		left: 10px;
+		width: -webkit-calc(~"100% - 20px");
+		width: calc(~"100% - 20px");
+
+		#content {
+			margin-bottom: 10px;
+			padding: 5px 10px;
+		}
+	}
+
+	#quran, #tafsir {
+		margin: 5px auto;
+	}
+	#quran .page {
+		font-size: 18px;
+		line-height: 30px;
+
+		div.sura {
+			margin: 4px 0 2px;
+		}
+		span.number {
+			line-height: 14px;
+			min-width: 10px;
+		}
+	}
+	#tafsir {
+		font-size: 18px;
+		line-height: 22px;
+		padding: 0 10px;
+
+		h1, h2, h3 {
+			line-height: 20px;
+			font-size: .9em;
+		}
+		p {
+			margin-bottom: 5px;
+		}
+		code.page {
+			visibility: hidden;
+		}
+	}
+}

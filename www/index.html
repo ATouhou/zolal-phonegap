@@ -1,42 +1,99 @@
-<!DOCTYPE html>
-<!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-        <link rel="stylesheet" type="text/css" href="css/index.css" />
-        <title>Hello World</title>
-    </head>
-    <body>
-        <div class="app">
-            <h1>PhoneGap</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
-            </div>
-        </div>
-        <script type="text/javascript" src="phonegap.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-        <script type="text/javascript">
-            app.initialize();
-        </script>
-    </body>
+<head>
+	<title>زلال</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/underscore.js"></script>
+	<script type="text/javascript" src="js/backbone.js"></script>
+	<script type="text/javascript" src="js/backbone.localStorage.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body>
+	<div id="wrap">
+		<div id="message">
+			<div class="container">
+				<button class="close">&times;</button>
+				<a><div id="content" class="alert"></div></a>
+			</div>
+		</div>
+		<div id="container" class="container">
+			<div id="quran">
+				<style id="page-style"></style>
+				<div id="pages"></div>
+			</div>
+			<div id="tafsir"></div>
+		</div>
+		<div rel="download" class="modal hide fade">
+			<div class="modal-header">
+				<h3>دریافت نرم‌افزار</h3>
+			</div>
+			<div class="modal-body">
+				<p>نسخه‌های قابل نصب زلال، هنوز در حال توسعه هستند:</p>
+				<p style="text-align: center">
+					<a href="#" class="btn disabled"><i class="icon-windows"></i> نسخه ویندوز</a>
+					<a href="#" class="btn disabled"><i class="icon-android"></i> نسخه آندروید</a>
+				</p>
+				<p>اگر می‌خواهید از زلال روی پلتفرم دیگری استفاده کنید، لطفا برای <a href="mailto:alireza.nournia@gmail.com">ما</a> بنویسید.</p>
+			</div>
+		</div>
+		<div rel="settings" class="modal hide fade">
+			<div class="modal-header">
+				<h3>تنظیمات</h3>
+			</div>
+			<div class="modal-body">
+				<p class="option">زبان تفسیر: <select id="language" class="control input-small"><option value="fa">فارسی</option><option value="ar">عربی</option></select></p>
+			</div>
+			<div class="modal-footer" style="text-align: left">
+				<a href="#" data-dismiss="modal" class="btn">لغو</a>
+				<a id="apply-settings" href="#" class="btn btn-primary" data-dismiss="modal">تایید</a>
+			</div>
+		</div>
+		<div rel="about" class="modal hide fade">
+			<div class="modal-header">
+				<h3>درباره زلال</h3>
+			</div>
+			<div class="modal-body">
+				<p>قرآن عمیق است و همه آرزو داریم که کمی بیشتر با آن آشنا شویم. ایده طراحی زلال، قرآنی بود که با نگاه به ظاهر آن، کمی از عمقش نیز پیداست؛ درست مثل آب روان. آنچه پیش روی شماست، اولین گام ما برای دستیابی به این هدف دور است و البته ما مشتاق برداشتن قدم‌های بعد هستیم.</p>
+				<p>شنیدن نظر شما در مورد این ایده و البته راه طی شده برای رسیدن به آن، برای ما اهمیت دارد. سهم شما از توسعه این پروژه نوشتن نامه برای <a href="mailto:alireza.nournia@gmail.com">ما</a> است.</p>
+
+				<p>با تشکر از پروژه <a href="http://tanzil.net" target="_blank">تنزیل</a> برای متن قرآن.</p>
+			</div>
+			<div class="modal-footer">
+				<div id="copyright">حاصل همکاری <a href="http://www.sobhe.ir/" target="_blank">سُبحه</a> و <a href="http://www.noorsoft.org/" target="_blank">مرکزی تحقیقات کامپیوتری علوم اسلامی «نور»</a></div>
+			</div>
+		</div>
+		<div id="footer" class="container">
+			<div id="address">
+				<ul id="navigator" class="nav nav-pills">
+					<li class="quran"><a rel="quran" href="#" class="control">قرآن</a></li>
+					<li class="tafsir"><a rel="tafsir" href="#" class="control">تفسیر</a></li>
+				</ul>
+				<div id="current">
+					<div class="quran-address">
+						سوره <input id="sura" class="bold" /> آیه <input id="aya" class="bold" /> صفحه <input id="page" class="bold" />
+					</div>
+					<div class="tafsir-address">
+						تفسیر المیزان، سوره <span id="sura" class="bold"></span>، آیات <span id="mi" class="bold"></span> تا <span id="ma" class="bold"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<ul id="menu">
+		<li><a href="#" rel="download"><i class="icon-download"></i> دریافت نرم‌افزار</a></li>
+		<li><a href="#" rel="settings"><i class="icon-cog"></i> زبان تفسیر</a></li>
+		<li><a href="#" rel="about"><i class="icon-question"></i> درباره زلال</a></li>
+	</ul>
+	<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+	<script type="text/javascript">(function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===e.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f);b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,e,d])};b.__SV=1.2}})(document,window.mixpanel||[]); mixpanel.init("08646e83029019f7dd879c063c73d480");</script>
+	<script type="text/javascript" src="js/jquery-ui.js"></script>
+	<script type="text/javascript" src="js/jquery.mobile.js"></script>
+	<script type="text/javascript" src="js/jquery.dotdotdot.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+	<script type="text/javascript" src="js/typeahead.js"></script>
+	<script type="text/javascript" src="js/meta.js"></script>
+	<script type="text/javascript" src="zolal.js"></script>
+</body>
 </html>
