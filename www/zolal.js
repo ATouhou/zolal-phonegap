@@ -1,4 +1,4 @@
-var store = false;
+var store = true;
 var server = 'http://zolal-files.ap01.aws.af.cm/';
 
 
@@ -229,22 +229,34 @@ var QuranView = Backbone.View.extend({
 				renderPage(page);
 			},
 			error: function () {
-				$.ajax({
+				found = function(data){
+					_.each(data.split('\n'), function(item) {
+						if (item) {
+							item = $.parseJSON(item);
+							aya = new Aya(item);
+							if (store) aya.save();
+							quran.collection.add(aya);
+						}
+					});
+					renderPage(this.page);
+				};
+
+				download = $.ajax({
 					context: {page: page},
 					url: server +'quran/p'+ page,
-					success: function(data){
-						_.each(data.split('\n'), function(item) {
-							if (item) {
-								item = $.parseJSON(item);
-								aya = new Aya(item);
-								if (store) aya.save();
-								quran.collection.add(aya);
-							}
-						});
-						renderPage(this.page);
-					},
+					success: found,
 					error: app.connectionError
 				});
+
+				if (store)
+					$.ajax({
+						context: {page: page},
+						url: 'files/quran/p'+ page,
+						success: found,
+						error: download
+					});
+				else
+					download();
 			}
 		});
 	},
