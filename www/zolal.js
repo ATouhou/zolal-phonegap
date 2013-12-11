@@ -229,34 +229,22 @@ var QuranView = Backbone.View.extend({
 				renderPage(page);
 			},
 			error: function () {
-				found = function(data){
-					_.each(data.split('\n'), function(item) {
-						if (item) {
-							item = $.parseJSON(item);
-							aya = new Aya(item);
-							if (store) aya.save();
-							quran.collection.add(aya);
-						}
-					});
-					renderPage(this.page);
-				};
-
-				download = $.ajax({
+				$.ajax({
 					context: {page: page},
 					url: server +'quran/p'+ page,
-					success: found,
+					success: function(data){
+						_.each(data.split('\n'), function(item) {
+							if (item) {
+								item = $.parseJSON(item);
+								aya = new Aya(item);
+								if (store) aya.save();
+								quran.collection.add(aya);
+							}
+						});
+						renderPage(this.page);
+					},
 					error: app.connectionError
 				});
-
-				if (store)
-					$.ajax({
-						context: {page: page},
-						url: 'files/quran/p'+ page,
-						success: found,
-						error: download
-					});
-				else
-					download();
 			}
 		});
 	},
