@@ -18,6 +18,7 @@ body {
   padding: 0;
   overflow: hidden;
   font-family: AppFont;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
 #wrap,
 #footer {
@@ -446,7 +447,7 @@ span.footnote:hover {
 .tooltip-inner {
   font-size: 15px;
 }
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   #wrap {
     padding: 0;
   }
